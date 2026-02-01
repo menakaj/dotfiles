@@ -1,0 +1,142 @@
+# Helix Language Configuration
+# TypeScript and Go language server settings
+
+# TypeScript / JavaScript Configuration
+[[language]]
+name = "typescript"
+language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 2, unit = "  " }
+
+[language-server.typescript-language-server]
+command = "typescript-language-server"
+args = ["--stdio"]
+config.hostInfo = "helix"
+
+[language-server.typescript-language-server.config.typescript.inlayHints]
+includeInlayEnumMemberValueHints = true
+includeInlayFunctionLikeReturnTypeHints = true
+includeInlayFunctionParameterTypeHints = true
+includeInlayParameterNameHints = "all"
+includeInlayParameterNameHintsWhenArgumentMatchesName = true
+includeInlayPropertyDeclarationTypeHints = true
+includeInlayVariableTypeHints = true
+
+[language-server.typescript-language-server.config.typescript.preferences]
+importModuleSpecifierPreference = "relative"
+
+# JavaScript Configuration (shares TypeScript LSP)
+[[language]]
+name = "javascript"
+language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 2, unit = "  " }
+
+# TSX Configuration
+[[language]]
+name = "tsx"
+language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 2, unit = "  " }
+
+# JSX Configuration
+[[language]]
+name = "jsx"
+language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 2, unit = "  " }
+
+# Go Configuration
+[[language]]
+name = "go"
+language-servers = ["gopls", "golangci-lint-lsp"]
+auto-format = true
+formatter = { command = "goimports" }
+indent = { tab-width = 4, unit = "\t" }
+
+[language-server.gopls]
+command = "gopls"
+config.hints.assignVariableTypes = true
+config.hints.compositeLiteralFields = true
+config.hints.compositeLiteralTypes = true
+config.hints.constantValues = true
+config.hints.functionTypeParameters = true
+config.hints.parameterNames = true
+config.hints.rangeVariableTypes = true
+
+[language-server.gopls.config.analyses]
+fieldalignment = true
+nilness = true
+unusedparams = true
+unusedwrite = true
+useany = true
+
+[language-server.golangci-lint-lsp]
+command = "golangci-lint-langserver"
+
+[language-server.golangci-lint-lsp.config]
+command = ["golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1"]
+
+[[language]]
+name = "python"
+language-servers = [ "basedpyright" ]
+
+[[language]]
+name = "markdown"
+language-servers = [ "mdpls" ]
+[language-server.mdpls]
+command = "mdpls"
+config = { markdown.preview.auto = true }
+
+
+[[language]]
+name = "lua"
+injection-regex = "lua"
+scope = "source.lua"
+file-types = ["lua", "rockspec"]
+shebangs = ["lua", "luajit"]
+roots = [".luarc.json", ".luacheckrc", ".stylua.toml", "selene.toml", ".git"]
+comment-token = "--"
+block-comment-tokens = { start = "--[[", end = "--]]" }
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "lua-language-server" ]
+
+[language-server.lua-language-server]
+command = "lua-language-server"
+
+[language-server.lua-language-server.config.Lua.hint]
+enable = true
+arrayIndex = "Enable"
+setType = true
+paramName = "All"
+paramType = true
+await = true
+
+
+[[grammar]]
+name = "lua"
+source = { git = "https://github.com/tree-sitter-grammars/tree-sitter-lua", rev = "e40f5b6e6df9c2d1d6d664ff5d346a75d71ee6b2" }
+
+[[language]]
+name = "luap"
+scope = "source.luap"
+file-types = []
+injection-regex = "luap"
+
+[[grammar]]
+name = "luap"
+source = { git = "https://github.com/tree-sitter-grammars/tree-sitter-luap", rev = "c134aaec6acf4fa95fe4aa0dc9aba3eacdbbe55a" }
+
+[[language]]
+name = "lua-format-string"
+scope = "source.lua-format-string"
+file-types = []
+injection-regex = "lua-format-string"
+
+[[grammar]]
+name = "lua-format-string"
+source = { git = "https://codeberg.org/kpbaks/tree-sitter-lua-format-string", rev = "b667c8cab109df307e1b4d56b0b43f5c4a353533" }

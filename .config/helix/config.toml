@@ -1,0 +1,37 @@
+theme = "dark_plus"
+
+[editor]
+bufferline = "always"
+cursorline = true
+# line-number = "relative"
+end-of-line-diagnostics = "hint"
+clipboard-provider = "tmux"
+
+[keys.normal]
+tab = ":buffer-next"
+S-tab = ":buffer-previous"
+C-s = ":w"
+C-y = [
+  ':sh rm -f /tmp/unique-file',
+  ':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/unique-file',
+  ':sh printf "\x1b[?1049h\x1b[?2004h" > /dev/tty',
+  ':open %sh{cat /tmp/unique-file}',
+  ':redraw',
+]
+X = ":buffer-close"
+C-x = ":q!"
+C-g = [
+    ":write-all", 
+    ":new", 
+    ":insert-output lazygit", 
+    ":buffer-close!", 
+    ":redraw", 
+    ":reload-all"
+]
+
+[keys.insert]
+j = {k = 'normal_mode'}
+k = {j = 'normal_mode'}
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
