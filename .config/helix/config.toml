@@ -1,11 +1,17 @@
-theme = "dark_plus"
+theme = "dark_high_contrast"
 
 [editor]
 bufferline = "always"
 cursorline = true
-# line-number = "relative"
+line-number = "relative"
 end-of-line-diagnostics = "hint"
 clipboard-provider = "tmux"
+default-yank-register = "+"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
 
 [keys.normal]
 tab = ":buffer-next"
@@ -18,6 +24,7 @@ C-y = [
   ':open %sh{cat /tmp/unique-file}',
   ':redraw',
 ]
+C-c = [':sh claude -p "%{selection}"']
 X = ":buffer-close"
 C-x = ":q!"
 C-g = [
@@ -28,10 +35,15 @@ C-g = [
     ":redraw", 
     ":reload-all"
 ]
+C-z = ":config-reload"
 
-[keys.insert]
-j = {k = 'normal_mode'}
-k = {j = 'normal_mode'}
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
+
+
+[editor.statusline]
+left = ["mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
