@@ -1,49 +1,95 @@
-theme = "dark_high_contrast"
+theme = "dark_plus"
 
 [editor]
 bufferline = "always"
 cursorline = true
 line-number = "relative"
 end-of-line-diagnostics = "hint"
-clipboard-provider = "tmux"
+# clipboard-provider = "tmux" #use when using with tmux
 default-yank-register = "+"
 
 [editor.cursor-shape]
 insert = "bar"
-normal = "block"
 select = "underline"
 
 [keys.normal]
+C-r = ":reload-all"
 tab = ":buffer-next"
 S-tab = ":buffer-previous"
-C-s = ":w"
-C-y = [
-  ':sh rm -f /tmp/unique-file',
-  ':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/unique-file',
-  ':sh printf "\x1b[?1049h\x1b[?2004h" > /dev/tty',
-  ':open %sh{cat /tmp/unique-file}',
-  ':redraw',
-]
-C-c = [':sh claude -p "%{selection}"']
-X = ":buffer-close"
-C-x = ":q!"
-C-g = [
-    ":write-all", 
-    ":new", 
-    ":insert-output lazygit", 
-    ":buffer-close!", 
-    ":redraw", 
-    ":reload-all"
-]
-C-z = ":config-reload"
+A-s = ":w"
+up = "scroll_up"
+down = "scroll_down"
+D = ["ensure_selections_forward", "extend_to_line_end", "delete_selection"]
+0 = "goto_line_start"
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+G = "goto_file_end"
+V = ["select_mode", "extend_to_line_bounds"]
+esc = ["collapse_selection", "keep_primary_selection"]
 
+
+# C-y = [
+#   ':sh rm -f /tmp/unique-file',
+#   ':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/unique-file',
+#   ':sh printf "\x1b[?1049h\x1b[?2004h" > /dev/tty',
+#   ':open %sh{cat /tmp/unique-file}',
+#   ':redraw',
+# ]
+# C-c = [':sh claude -p "%{selection}"']
+# X = ":buffer-close"
+# C-x = ":q!"
+# C-h = [
+#     ":write-all",
+#     ":new",
+#     ":insert-output lazygit",
+#     ':sh printf "\x1b[?1049h\x1b[?2004h" > /dev/tty',
+#     ":buffer-close!",
+#     ":redraw",
+#     ":reload-all"
+# ]
+A-r = ":config-reload"
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
 
 
 [editor.statusline]
-left = ["mode", "spinner"]
-center = ["file-name"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
-separator = "│"
+left = [
+  "mode",
+  "spinner",
+  "version-control",
+  "spacer",
+  "separator",
+  "file-name",
+  "read-only-indicator",
+  "file-modification-indicator",
+
+]
+center = []
+right = [
+  "diagnostics",
+  "workspace-diagnostics",
+  "position",
+  "total-line-numbers",
+  "position-percentage",
+  "file-encoding",
+  "file-line-ending",
+  "file-type",
+  "register",
+  "selections",
+]
+
+[editor.indent-guides]
+render = true
+
+[keys.select]
+i = "select_textobject_inner"
+a = "select_textobject_around"
+0 = "goto_line_start"
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+G = "goto_file_end"
+D = ["extend_to_line_bounds", "delete_selection", "normal_mode"]
+k = ["extend_line_up", "extend_to_line_bounds"]
+j = ["extend_line_down", "extend_to_line_bounds"]
+
